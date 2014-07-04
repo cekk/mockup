@@ -13,7 +13,7 @@
     "es5-shim": "3.4.0",
     "html5shiv": "3.7.2",
     "jqtree": "0.21.0",
-    "jquery": "1.8.3",
+    "jquery": "1.9.1",
     "jquery-form": "3.50",
     "jquery.cookie": "1.4.1",
     "lodash": "2.4.1",
@@ -29,6 +29,6 @@
     "sinonjs": "1.10.2"
   },
   "resolutions": {
-    "jquery": "1.8.3"
+    "jquery": "1.9.1"
   }
 }
