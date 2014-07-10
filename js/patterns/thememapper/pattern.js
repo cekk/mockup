@@ -91,29 +91,29 @@ define([
     */
     self.buildRule = function(themeChildren, contentChildren) {
       if (self.ruleType === null) {
-        return "";
+        return '';
       }
 
       if (self.subtype !== null) {
         if (self.subtype === 'content') {
-          return "<" + self.ruleType + "\n    " +
+          return '<' + self.ruleType + '\n    ' +
             self.calculateDiazoSelector(self._contentElement, 'content', contentChildren) +
-            "\n    />";
+            '\n    />';
         } else if (self.subtype === 'theme') {
-          return "<" + self.ruleType + "\n    " +
+          return '<' + self.ruleType + '\n    ' +
             self.calculateDiazoSelector(self._themeElement, 'theme', themeChildren) +
-            "\n    />";
+            '\n    />';
         }
 
       } else {
-        return "<" + self.ruleType + "\n    " +
-          self.calculateDiazoSelector(self._themeElement, 'theme', themeChildren) + "\n    " +
+        return '<' + self.ruleType + '\n    ' +
+          self.calculateDiazoSelector(self._themeElement, 'theme', themeChildren) + '\n    ' +
           self.calculateDiazoSelector(self._contentElement, 'content', contentChildren) +
-          "\n    />";
+          '\n    />';
       }
 
       // Should never happen
-      return "Error";
+      return 'Error';
     };
 
     /**
@@ -124,14 +124,14 @@ define([
       var selector = element.tagName.toLowerCase();
 
       if (element.id) {
-        selector += "#" + element.id;
+        selector += '#' + element.id;
       } else {
         var classes = $(element).attr('class');
         if(classes !== undefined) {
           var splitClasses = classes.split(/\s+/);
           for(var i = 0; i < splitClasses.length; i=i+1) {
-            if(splitClasses[i] !== "" && splitClasses[i].indexOf('_theming') === -1) {
-              selector += "." + splitClasses[i];
+            if(splitClasses[i] !== '' && splitClasses[i].indexOf('_theming') === -1) {
+              selector += '.' + splitClasses[i];
               break;
             }
           }
@@ -155,7 +155,7 @@ define([
       while (element && element.nodeType === 1) {
         var selector = this.calculateCSSSelector(element);
             paths.splice(0, 0, selector);
-            path = paths.join(" ");
+            path = paths.join(' ');
 
         // The ultimateParent constraint is necessary since
         // this may be inside an iframe
@@ -173,31 +173,30 @@ define([
     * Return a valid, unique XPath selector for the given element.
     */
     self.calculateUniqueXPathExpression = function(element) {
-      var pathElements = [];
       var parents = $(element).parents();
 
       function elementIndex(e) {
         var siblings = $(e).siblings(e.tagName.toLowerCase());
         if(siblings.length > 0) {
-          return "[" + ($(e).index() + 1) + "]";
+          return '[' + ($(e).index() + 1) + ']';
         } else {
-          return "";
+          return '';
         }
       }
 
-      var xpathString = "/" + element.tagName.toLowerCase();
+      var xpathString = '/' + element.tagName.toLowerCase();
       if(element.id) {
-        return "/" + xpathString + "[@id='" + element.id + "']";
+        return '/' + xpathString + '[@id="' + element.id + '"]';
       } else {
         xpathString += elementIndex(element);
       }
 
       for(var i = 0; i < parents.length; i=i+1) {
         var p = parents[i];
-        var pString = "/" + p.tagName.toLowerCase();
+        var pString = '/' + p.tagName.toLowerCase();
 
         if(p.id) {
-          return "/" + pString + "[@id='" + p.id + "']" + xpathString;
+          return '/' + pString + '[@id="' + p.id + '"]' + xpathString;
         } else {
           xpathString = pString + elementIndex(p) + xpathString;
         }
@@ -220,15 +219,15 @@ define([
     self.calculateDiazoSelector = function(element, scope, children) {
       var selectorType = scope;
       if(children) {
-        selectorType += "-children";
+        selectorType += '-children';
       }
 
       var cssSelector = self.calculateUniqueCSSSelector(element);
       if(cssSelector) {
-        return "css:" + selectorType + "=\"" + cssSelector + "\"";
+        return 'css:' + selectorType + '="' + cssSelector + '"';
       } else {
         var xpathSelector = self.calculateUniqueXPathExpression(element);
-        return selectorType + "=\"" + xpathSelector + "\"";
+        return selectorType + '="' + xpathSelector + '"';
       }
 
     };
@@ -319,13 +318,13 @@ define([
     _setupFrame: function() {
       var self = this;
 
-      self.$frame.contents().find("*").hover(function(e) {
+      self.$frame.contents().find('*').hover(function(e) {
         if(self.enabled) {
           e.stopPropagation();
           self.$frame.focus();
           self.setOutline(this);
         }
-      }, function(e) {
+      }, function() {
         if($(this).hasClass(self.activeClass)) {
           self.clearOutline(this);
         }
@@ -378,14 +377,14 @@ define([
       }
 
       self.animateSelector();
-      self.$selectorInfo.text(element === null ? "" : self.ruleBuilder.bestSelector(element));
+      self.$selectorInfo.text(element === null ? '' : self.ruleBuilder.bestSelector(element));
 
       this.options.onsave(this, element);
     },
     clearOutline: function(element){
       var self = this;
-      $(element).css('outline', "");
-      $(element).css('cursor', "");
+      $(element).css('outline', '');
+      $(element).css('cursor', '');
 
       $(element).removeClass(self.activeClass);
 
@@ -413,18 +412,18 @@ define([
     },
     animateSelector: function(highlightColor, duration) {
       var self = this;
-      var highlightBg = highlightColor || "#FFFFE3";
+      var highlightBg = highlightColor || '#FFFFE3';
       var animateMs = duration || 750;
-      var originalBg = self.$frameInfo.css("background-color");
+      var originalBg = self.$frameInfo.css('background-color');
 
       if (!originalBg || originalBg === highlightBg){
-          originalBg = "#FFFFFF"; // default to white
+          originalBg = '#FFFFFF'; // default to white
       }
 
       self.$frameInfo
-        .css("backgroundColor", highlightBg)
+        .css('backgroundColor', highlightBg)
         .animate({ backgroundColor: originalBg }, animateMs, null, function () {
-          self.$frameInfo.css("backgroundColor", originalBg);
+          self.$frameInfo.css('backgroundColor', originalBg);
         });
     }
   });
@@ -440,7 +439,7 @@ define([
     },
     init: function() {
       var self = this;
-      if(typeof(self.options.filemanagerConfig) === "string"){
+      if(typeof(self.options.filemanagerConfig) === 'string'){
         self.options.filemanagerConfig = $.parseJSON(self.options.filemanagerConfig);
       }
       self.$fileManager = $('<div class="pat-filemanager"/>').appendTo(self.$el);

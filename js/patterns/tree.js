@@ -1,9 +1,11 @@
 /* Tree pattern.
  *
- * Options: data(jSON): load data structure directly into tree (undefined)
- * dataUrl(jSON): Load data from remote url (undefined) autoOpen(boolean): auto
- * open tree contents (false) dragAndDrop(boolean): node drag and drop support
- * (false) selectable(boolean): if nodes can be selectable (true)
+ * Options:
+ * data(jSON): load data structure directly into tree (undefined)
+ * dataUrl(jSON): Load data from remote url (undefined)
+ * autoOpen(boolean): auto open tree contents (false)
+ * dragAndDrop(boolean): node drag and drop support (false)
+ * selectable(boolean): if nodes can be selectable (true)
  * keyboardSupport(boolean): if keyboard naviation is allowed (true)
  *
  * Documentation: # JSON node data
